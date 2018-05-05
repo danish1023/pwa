@@ -1,6 +1,10 @@
 {
   "short_name": "Capsicum",
   "name": "The Bell Pepper",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#f5f5f5",
+  "theme_color": "#f5f5f5",
   "icons": [
     {
       "src": "./launcher-icon-1x.png",
@@ -18,5 +22,5 @@
       "sizes": "192x192"
     }
   ],
-  "start_url": "index.html?launcher=true"
+  "start_url": "./index.html?launcher=true"
 }
