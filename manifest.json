@@ -1,26 +1,37 @@
 {
-  "short_name": "Capsicum",
-  "name": "The Bell Pepper",
+  "short_name": "PWA",
+  "name": "Progressive Web App",
   "display": "standalone",
   "orientation": "portrait",
   "background_color": "#f5f5f5",
   "theme_color": "#f5f5f5",
   "icons": [
     {
-      "src": "./launcher-icon-1x.png",
+      "src": "./icon-1x.png",
       "type": "image/png",
-      "sizes": "48x48"
+      "sizes": "64x64"
     },
     {
-      "src": "./launcher-icon-2x.png",
+      "src": "./icon-2x.png",
       "type": "image/png",
-      "sizes": "96x96"
+      "sizes": "128x128"
     },
     {
-      "src": "./launcher-icon-4x.png",
+      "src": "./icon-3x.png",
       "type": "image/png",
       "sizes": "192x192"
+    },
+    {
+      "src": "./icon-4x.png",
+      "type": "image/png",
+      "sizes": "256x256"
+    },
+    {
+      "src": "./icon-8x.png",
+      "type": "image/png",
+      "sizes": "512x512"
     }
   ],
+  "scope": "/",
   "start_url": "./index.html?launcher=true"
 }
