@@ -36,9 +36,8 @@
   <script>
     (function () {
       if ('serviceWorker' in navigator) {
-        navigator.serviceWorker.register('./service-worker.js', {
-          scope: '.' // <--- THIS IS REQUIRED FOR RUNNING A PROGRESSIVE WEB APP FROM A NON_ROOT PATH
-        }).then(function (registration) {
+        navigator.serviceWorker.register('./service-worker.js', { scope: "./" })
+        .then(function (registration) {
           console.log('Registration successful, scope is:', registration.scope);
         })
         .catch(function (error) {
