@@ -32,9 +32,6 @@
       "sizes": "512x512"
     }
   ],
-  "serviceworker": {
-    "src": "./service-workerssss.js",
-    "scope": "./aaa"
-  },
+  "scope": "./bbb",
   "start_url": "./index.html?launcher=true"
 }
