@@ -21,21 +21,22 @@ self.addEventListener('activate', function (event) {
 });
 
 //Fetch
-self.addEventListener('fetch', function (event) {
+self.addEventListener('fetch', (event) => {
   console.log('[ServiceWorker] Fetch');
+  var request = event.request;
   event.respondWith(
-    caches.match(event.request).then((response) => {
+    caches.match(request).then((response) => {
       if (response) {
         return response;
       }
-      return fetch(event.request).then(function (networkResponse) {
-        var cloneResponse = networkResponse.clone();
+      return fetch(request).then((response) => {
+        var responseToCache = response.clone();
         caches.open(cacheName).then((cache) => {
-          cache.put(event.request, cloneResponse).catch((error) => {
-            console.error('Error in fetch handler:', error.message);
+            cache.put(request, responseToCache).catch((error) => {
+              console.warn(request.url + ': ' + error.message);
+            });
           });
-        });
-        return networkResponse;
+        return response;
       });
     })
   );
