@@ -29,8 +29,9 @@ self.addEventListener('fetch', function (event) {
         return response;
       }
       return fetch(event.request).then(function (networkResponse) {
+        var cloneResponse = networkResponse.clone();
         caches.open(cacheName).then((cache) => {
-          cache.put(event.request, networkResponse.clone()).catch((error) => {
+          cache.put(event.request, cloneResponse).catch((error) => {
             console.error('Error in fetch handler:', error.message);
           });
         });
