@@ -4,9 +4,10 @@ var filesToCache = [
   './index.html?launcher=true'
 ];
 
-self.addEventListener('install', function (e) {
+//Install
+self.addEventListener('install', function (event) {
   console.log('[ServiceWorker] Install');
-  e.waitUntil(
+  event.waitUntil(
     caches.open(cacheName).then(function (cache) {
       console.log('[ServiceWorker] Caching app shell');
       return cache.addAll(filesToCache);
@@ -14,26 +15,27 @@ self.addEventListener('install', function (e) {
   );
 });
 
-self.addEventListener('activate', function (e) {
+//Activate
+self.addEventListener('activate', function (event) {
   console.log('[ServiceWorker] Activate');
 });
 
+//Fetch
 self.addEventListener('fetch', function (event) {
   console.log('[ServiceWorker] Fetch');
-  caches.open(cacheName).then(function (cache) {
-    return cache.match(event.request).then(function (response) {
+  event.respondWith(
+    caches.match(request).then((response) => {
       if (response) {
-        console.log('Found response in cache:', response);
         return response;
       }
-      console.log('Fetching request from the network');
       return fetch(event.request).then(function (networkResponse) {
-        cache.put(event.request, networkResponse.clone());
+        caches.open(cacheName).then((cache) => {
+          cache.put(event.request, networkResponse.clone()).catch((error) => {
+            console.error('Error in fetch handler:', error.message);
+          });
+        });
         return networkResponse;
       });
-    }).catch(function (error) {
-      console.error('Error in fetch handler:', error);
-      throw error;
-    });
-  })
+    })
+  );
 });
