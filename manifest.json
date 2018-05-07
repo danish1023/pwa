@@ -9,6 +9,16 @@
     {
       "src": "./icon.png",
       "type": "image/png",
+      "sizes": "48x48"
+    },
+    {
+      "src": "./icon-small.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "./icon-large.png",
+      "type": "image/png",
       "sizes": "512x512"
     }
   ],
