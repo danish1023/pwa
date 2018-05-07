@@ -34,7 +34,7 @@
   ],
   "serviceworker": {
     "src": "./service-worker.js",
-    "scope": "./"
+    "scope": "./aaa"
   },
   "start_url": "./index.html?launcher=true"
 }
