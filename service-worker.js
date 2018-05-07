@@ -4,43 +4,36 @@ var filesToCache = [
   './index.html?launcher=true'
 ];
 
-self.addEventListener('install', function(e) {
+self.addEventListener('install', function (e) {
   console.log('[ServiceWorker] Install');
   e.waitUntil(
-    caches.open(cacheName).then(function(cache) {
+    caches.open(cacheName).then(function (cache) {
       console.log('[ServiceWorker] Caching app shell');
       return cache.addAll(filesToCache);
     })
   );
 });
 
-self.addEventListener('activate', function(e) {
+self.addEventListener('activate', function (e) {
   console.log('[ServiceWorker] Activate');
 });
 
-self.addEventListener('fetch', (event) => {
+self.addEventListener('fetch', function (event) {
   console.log('[ServiceWorker] Fetch');
-
-  var request = event.request;
-
-  //Tell the browser to wait for newtwork request and respond with below
-  event.respondWith(
-    //If request is already in cache, return it
-    caches.match(request).then((response) => {
+  caches.open(cacheName).then(function (cache) {
+    return cache.match(event.request).then(function (response) {
       if (response) {
+        console.log('Found response in cache:', response);
         return response;
       }
-      //if request is not cached or navigation preload response, add it to cache
-      return fetch(request).then((response) => {
-        var responseToCache = response.clone();
-        caches.open(cacheName).then((cache) => {
-            cache.put(request, responseToCache).catch((err) => {
-              console.warn(request.url + ': ' + err.message);
-            });
-          });
-
-        return response;
+      console.log('Fetching request from the network');
+      return fetch(event.request).then(function (networkResponse) {
+        cache.put(event.request, networkResponse.clone());
+        return networkResponse;
       });
-    })
-  );
+    }).catch(function (error) {
+      console.error('Error in fetch handler:', error);
+      throw error;
+    });
+  })
 });
